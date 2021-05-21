@@ -1,0 +1,26 @@
+#!/bin/bash
+sudo snap install docker
+sudo addgroup --system docker
+sudo adduser ubuntu docker
+newgrp docker
+sudo snap disable docker
+sudo snap enable docker
+
+sudo adduser bitwarden
+sudo usermod -aG docker bitwarden
+sudo mkdir /opt/bitwarden
+sudo chmod -R 700 /opt/bitwarden
+sudo chown -R bitwarden:bitwarden /opt/bitwarden
+
+cat /etc/group | grep docker
+docker -v
+docker-compose -v
+docker ps
+
+curl -Lso bitwarden.sh https://go.btwrdn.co/bw-sh && chmod 700 bitwarden.sh
+
+./bitwarden.sh install
+
+./bitwarden.sh start
+
+./bitwarden.sh update
